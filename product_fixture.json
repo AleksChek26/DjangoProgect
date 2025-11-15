@@ -1,0 +1,28 @@
+[
+{
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+        "name": "Смартфон Samsung Galaxy S25 Ultra 5G 12/1TB Titanium Jade Green",
+        "description": "Отличный смфртфон",
+        "image": "",
+        "category": 1,
+        "price": 95990,
+        "created_at": "2025-11-14T09:43:46.758Z",
+        "updated_at": "2025-11-14T09:43:46.816Z"
+    }
+},
+{
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+        "name": "Ноутбук Apple MacBook Air",
+        "description": "13.6\" Ноутбук Apple MacBook Air M4 голубой",
+        "image": "",
+        "category": 2,
+        "price": 95999,
+        "created_at": "2025-11-14T09:57:21.732Z",
+        "updated_at": "2025-11-14T09:57:21.732Z"
+    }
+}
+]
