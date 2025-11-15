@@ -3,10 +3,14 @@
 ## Gingerstore - проект интернет-магазина написанный при помощи фреймворка "Django"
 
 ## Перед запуском проекта:
+    
+    -создайте базу данных в ручном режиме
 
     -скопируйте .env.example в .env
 
     -заполните .env реальными значениями
+
+    -подключите СУБД PostgreSQL для работы в проекте
 
 ## Установка:
 
@@ -18,6 +22,10 @@
 
     poetry install
     poetry add django
+    poetry add python-dotenv
+    poetry add psycopg2-binary
+    poetry add ipython
+    poetry add pillow
 
 ## Использование:
 
