@@ -1,9 +1,8 @@
-{% extends 'base.html' %}
+{% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% block content %}
 <div class="container">
      <div class="row row-cols-1 row-cols-md-3 g-4">
-     {% for product in products %}
        <div class="col">
            <div class="card h-100">
            <img src="{{ product.image|media_filter }}"
@@ -11,20 +10,19 @@
                 alt="{{ product.name }}"
                 style="height: 200px; object-fit: cover;">
            <div class="card-body d-flex flex-column">
-             <h5 class="card-title">{{ product.name }}</h5>
-             <p class="card-text flex-grow-1">{{ product.description|truncatechars:100 }}</p>
+             <h5 class="card-title">{{ object.name }}</h5>
+             <p class="card-text flex-grow-1">{{ object.description }}</p>
              {% if product.price %}
-               <p class="fw-bold mt-auto">₽ {{ product.price }}</p>
+               <p class="fw-bold mt-auto">₽ {{ object.price }}</p>
              {% endif %}
            </div>
-               <div class="card-footer">
-               <a href="{% url 'catalog:product_detail' product.pk %}" class="btn btn-primary w-100">
-                 {{ product.name }}
+             <div class="card-footer">
+               <a href="{% url 'catalog:product_list' %}" class="btn btn-primary w-100">
+                 Главная страница
                </a>
              </div>
          </div>
        </div>
-     {% endfor %}
    </div>
   </div>
 {% endblock %}
