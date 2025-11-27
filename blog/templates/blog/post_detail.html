@@ -1,0 +1,59 @@
+{% extends "blog/base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <article>
+            <h1>{{ post.title }}</h1>
+
+            <p class="text-muted">
+                Опубликовано: {{ post.created_at|date:"d.m.Y H:i" }} |
+                Просмотров: {{ post.views }}
+            </p>
+
+            {% if post.preview_image %}
+                <figure class="mb-3">
+                    <img src="{{ post.preview_image.url }}"
+                         alt="{{ post.title }}"
+                         class="img-fluid rounded">
+                    <figcaption class="text-muted mt-1">Превью статьи</figcaption>
+                </figure>
+            {% endif %}
+
+            <div class="content">
+                {{ post.content|linebreaks }}
+            </div>
+
+            <hr>
+
+            <div class="actions">
+                <a href="{% url 'blog:post_update' post.pk %}" class="btn btn-sm btn-outline-primary">
+                    Редактировать
+                </a>
+                <a href="{% url 'blog:post_delete' post.pk %}" class="btn btn-sm btn-outline-danger">
+                    Удалить
+                </a>
+            </div>
+        </article>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6>Действия</h6>
+            </div>
+            <div class="card-body">
+                <ul class="list-unstyled">
+                    <li>
+                        <a href="{% url 'blog:post_list' %}">
+                            ← К списку статей
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
