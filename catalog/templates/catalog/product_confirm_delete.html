@@ -1,0 +1,35 @@
+{% extends "catalog/base.html" %}
+
+
+{% block title %}Удалить запись{% endblock %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <h2>Удалить запись «{{ object.name }}»?</h2>
+
+        <p>Вы уверены, что хотите удалить эту запись? Это действие нельзя отменить.</p>
+
+
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Да, удалить</button>
+            <a href="{% url 'catalog:product_detail' object.pk %}" class="btn btn-secondary">Нет, вернуться</a>
+        </form>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6>Внимание!</h6>
+            </div>
+            <div class="card-body">
+                <p class="text-danger">
+                    После удаления запись будет безвозвратно удалена из базы данных.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
