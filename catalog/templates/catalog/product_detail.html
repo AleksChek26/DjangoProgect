@@ -17,9 +17,16 @@
              {% endif %}
            </div>
              <div class="card-footer">
-               <a href="{% url 'catalog:product_list' %}" class="btn btn-primary w-100">
+               <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-primary w-100">
                  Главная страница
                </a>
+                 <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-outline-warning w-100">
+                 Редактировать
+                 </a>
+                 <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-outline-danger w-100">
+                 Удалить
+               </a>
+
              </div>
          </div>
        </div>
