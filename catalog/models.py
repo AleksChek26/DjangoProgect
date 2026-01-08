@@ -1,6 +1,12 @@
 from django.db import models
 from django.db.models import SET_NULL
+from django.conf import settings
 
+
+def get_default_owner():
+    from django.contrib.auth import get_user_model
+    User = get_user_model()
+    return User.objects.get_or_create(email='system_owner')[0].id
 
 class Product(models.Model):
     name = models.CharField(max_length=150, verbose_name="Наименование")
@@ -19,6 +25,13 @@ class Product(models.Model):
     updated_at = models.DateTimeField(
         auto_now=True, verbose_name="Дата последнего изменения"
     )
+    is_published = models.BooleanField(default=False)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='products',
+        default=get_default_owner
+    )
 
     def __str__(self):
         return f"{self.name} {self.category}"
@@ -27,6 +40,9 @@ class Product(models.Model):
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
         ordering = ["name"]
+        permissions = [
+            ("can_unpublish_product", "Может отменять публикацию продукта"),
+        ]
 
 
 class Category(models.Model):
