@@ -44,7 +44,6 @@ class Product(models.Model):
             ("can_unpublish_product", "Может отменять публикацию продукта"),
         ]
 
-
 class Category(models.Model):
     name = models.CharField(max_length=150, verbose_name="Наименование")
     description = models.TextField(verbose_name="Описание")

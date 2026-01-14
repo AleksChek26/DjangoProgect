@@ -1,19 +1,52 @@
 from django.http import HttpResponseForbidden
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 
 from catalog.forms import ProductForm
-from catalog.models import Product
+from catalog.models import Product, Category
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from .services import get_products_by_category
+
+class CategoryProductsView(ListView):
+    model = Product
+    template_name = 'catalog/category_products.html'
+    context_object_name = 'products'
+    paginate_by = 12  # Пагинация: 12 товаров на страницу
+
+    allow_empty = False  # 404, если товаров нет
+
+
+    def get_queryset(self):
+        category_pk = self.kwargs['pk']  # Получаем ID категории из URL
+        return get_products_by_category(category_pk, limit=12)  # Фильтруем товары по category_id
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Добавляем категорию в контекст
+        category_pk = self.kwargs['pk']
+        category = get_object_or_404(Category, id=category_pk)
+        context['category'] = category
+        return context
+
+    # Кеширование всего представления (15 минут)
+    @method_decorator(cache_page(60 * 15))
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 class ProductListView(ListView):
     model = Product
 
+@method_decorator(cache_page(60 * 15), name='dispatch')
 class ProductDetailView(LoginRequiredMixin, DetailView):
     model = Product
+    template_name = 'catalog/product_detail.html'
+    context_object_name = 'product'
 
 class ContactsView(TemplateView):
     template_name = "catalog/contacts.html"
