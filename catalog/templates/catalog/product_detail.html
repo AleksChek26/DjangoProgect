@@ -23,6 +23,9 @@
                  <a href="{% url 'catalog:product_update' product.pk %}" class="btn btn-outline-warning w-100">
                  Редактировать
                  </a>
+                 <a href="{% url 'catalog:category_products' pk=product.category.id %}" class="btn btn-outline-primary w-100">
+                 Категория {{ product.category.name }}
+                 </a>
                  <a href="{% url 'catalog:product_delete' product.pk %}" class="btn btn-outline-danger w-100">
                  Удалить
                </a>
