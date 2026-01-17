@@ -26,6 +26,7 @@
     poetry add psycopg2-binary
     poetry add ipython
     poetry add pillow
+    poetry add redis
 
 ## Использование:
 
