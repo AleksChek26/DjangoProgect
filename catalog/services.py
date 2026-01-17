@@ -1,5 +1,7 @@
 from django.core.cache import cache
-from .models import Product, Category
+
+from .models import Category, Product
+
 
 def get_products_by_category(category_id, limit=None):
     cache_key = f'category_products_{category_id}_{limit or "all"}'
@@ -8,11 +10,10 @@ def get_products_by_category(category_id, limit=None):
     if not products:
         try:
             category = Category.objects.get(id=category_id)
-            products = Product.objects.filter(
-                category=category,
-                is_published=True
-            ).select_related('category').only(
-                'id', 'name', 'price', 'image', 'category__name'
+            products = (
+                Product.objects.filter(category=category, is_published=True)
+                .select_related("category")
+                .only("id", "name", "price", "image", "category__name")
             )
             if limit:
                 products = products[:limit]
